@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: timetracker
+  name: timetracker-config
+data:
+  NEXT_PUBLIC_SUPABASE_URL: "https://tiztggcedgppkkrhnbpa.supabase.co"
+  NEXT_PUBLIC_SUPABASE_ANON_KEY: "sb_publishable_sDr0ID3FKpDo1rQ7VSwzrQ_V8pblpnk"
