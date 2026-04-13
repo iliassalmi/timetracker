@@ -1,0 +1,13 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "ssm:GetParameters",
+        "ssm:GetParameter"
+      ],
+      "Resource": "arn:aws:ssm:eu-west-3:660409041093:parameter/timetracker/SUPABASE_SERVICE_ROLE_KEY"
+    }
+  ]
+}

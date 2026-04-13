@@ -1,0 +1,47 @@
+{
+  "family": "timetracker-task",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "512",
+  "memory": "1024",
+  "executionRoleArn": "arn:aws:iam::660409041093:role/timetracker-ecs-execution-role",
+  "containerDefinitions": [
+    {
+      "name": "timetracker",
+      "image": "660409041093.dkr.ecr.eu-west-3.amazonaws.com/timetracker:latest",
+      "essential": true,
+      "portMappings": [
+        {
+          "containerPort": 3000,
+          "protocol": "tcp"
+        }
+      ],
+      "environment": [
+        { "name": "NODE_ENV", "value": "production" },
+        { "name": "NEXT_PUBLIC_SUPABASE_URL", "value": "https://tiztggcedgppkkrhnbpa.supabase.co" },
+        { "name": "NEXT_PUBLIC_SUPABASE_ANON_KEY", "value": "sb_publishable_sDr0ID3FKpDo1rQ7VSwzrQ_V8pblpnk" }
+      ],
+      "secrets": [
+        {
+          "name": "SUPABASE_SERVICE_ROLE_KEY",
+          "valueFrom": "arn:aws:ssm:eu-west-3:660409041093:parameter/timetracker/SUPABASE_SERVICE_ROLE_KEY"
+        }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/timetracker",
+          "awslogs-region": "eu-west-3",
+          "awslogs-stream-prefix": "ecs"
+        }
+      },
+      "healthCheck": {
+        "command": ["CMD-SHELL", "curl -f http://localhost:3000/api/health || exit 1"],
+        "interval": 30,
+        "timeout": 5,
+        "retries": 3,
+        "startPeriod": 30
+      }
+    }
+  ]
+}
